@@ -1,3 +1,11 @@
-# Thera: Mobile Robot ROS2
+# Toy ROS
 
-<!-- Thera 取自圣托里尼岛(Santorini) 的古名 [希拉(Thera)](https://en.wikipedia.org/wiki/Santorini)，后为纪念圣·爱莲（SaintIrene），于1207年被改为圣托里尼。 -->
+
+## 文档
+
+项目文档基于 VitePress 构建，启动本地文档方式如下：
+
+```bash
+pnpm i
+pnpm docs:dev
+```

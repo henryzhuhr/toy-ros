@@ -1,0 +1,48 @@
+name: docs
+
+# 事件触发工作流程: https://docs.github.com/zh/actions/writing-workflows/choosing-when-your-workflow-runs/triggering-a-workflow#using-events-to-trigger-workflows
+on:
+  push:
+    branches:   # 每当 push 到分支时触发部署
+      - main
+  workflow_dispatch:  # 允许你从 Actions 选项卡手动运行此工作流程 : https://docs.github.com/zh/actions/writing-workflows/choosing-when-your-workflow-runs/triggering-a-workflow#defining-inputs-for-manually-triggered-workflows
+
+jobs:
+  docs:
+    runs-on: macos-latest   # 运行环境选择: https://docs.github.com/zh/actions/writing-workflows/choosing-where-your-workflow-runs/choosing-the-runner-for-a-job
+    steps:
+      - name: Checkout this
+        # @see https://github.com/actions/checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # 如果未启用 lastUpdated，则不需要
+            
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run install
+        # @see https://github.com/marketplace/actions/setup-pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 9
+          run_install: |
+            - recursive: true
+              args: [--no-frozen-lockfile, --strict-peer-dependencies]
+            - args: [--global, gulp, prettier, typescript]
+      
+      - name: Build Site
+        run: pnpm docs:build
+
+      - name: Deploy to GitHub Pages
+        # @see https://github.com/crazy-max/ghaction-github-pages
+        uses: crazy-max/ghaction-github-pages@v2
+        with:
+          # 部署到 gh-pages 分支
+          target_branch: gh-pages
+          # 部署目录为 VuePress 的默认输出目录
+          build_dir: .vitepress/dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
