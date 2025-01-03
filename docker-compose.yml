@@ -1,0 +1,36 @@
+# https://docs.docker.com/reference/compose-file/services/
+services:
+  toy-ros-development:
+    build:
+      context: .
+      dockerfile: dockerfiles/Dockerfile
+    image: toy-ros-development:latest
+    restart: unless-stopped
+    environment:  # 设置环境变量
+      # DISPLAY: $DISPLAY
+      # -- IP 是宿主机的ip地址，用于显示图形界面
+      # 1. 执行命令获取宿主机ip地址后，替换下面的IP 
+      #    export IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}') && echo $IP
+      # 2. 然后在终端执行 `xhost +` 启动X11客户端
+      DISPLAY: host.docker.internal:0 # 宿主机 运行 : https://techsparx.com/software-development/docker/display-x11-apps.html
+      # NVIDIA_VISIBLE_DEVICES: all
+      # NVIDIA_DRIVER_CAPABILITIES: all
+    volumes:
+      - ~/.ssh:/root/.ssh:ro # 挂载宿主机的ssh配置文件，方便推拉代码（只读）
+      - .:/root/toy-ros
+      # - /tmp/.X11-unix:/tmp/.X11-unix:rw # 显示图形界面，需要 `xhost +` 启动X11客户端
+    working_dir: /root/toy-ros
+    network_mode: "host"  # 使用主机网络模式
+    # platform: linux/arm64/v8
+    # -- 端口映射
+    ports:          
+      - "8080:8080" 
+      - "22:22"
+    # runtime: nvidia  # 使用 nvidia-docker
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - capabilities: [gpu]
+    # sleep infinity 用于保持容器运行，否则 vscode 无法进入容器
+    command: ["sleep", 'infinity']
