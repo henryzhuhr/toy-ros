@@ -6,12 +6,29 @@ import { DefaultTheme, defineConfig } from 'vitepress'
 const sidebar: DefaultTheme.Sidebar = [
   {
     text: '开始',
+    base: '/starter',
+    collapsed: true,
     items: [
-      { text: '简介', link: '/' },
       { text: '文档', link: '/doc' },
       { text: '启动项目', link: '/starter' },
     ]
   },
+  {
+    text: '开发指南',
+    base: '/development',
+    collapsed: true,
+    items: [
+      { text: '脚本', link: '/scripts' },
+    ]
+  },
+  {
+    text: '帮助',
+    base: '/helper',
+    collapsed: true,
+    items: [
+      { text: 'ROS2 示例', link: '/demo' },
+    ]
+  }
 ]
 
 

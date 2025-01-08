@@ -1,0 +1,15 @@
+{
+    "clangd.arguments": [
+        "--clang-tidy", // 开启clang-tidy
+        "--clang-tidy-checks=performance-*,bugprone-*",
+        "--j=5", // 后台线程数，可根据机器配置自行调整
+        "--query-driver=/usr/bin/clang++",
+        "--all-scopes-completion", // 全代码库补全
+        "--completion-style=detailed", // 详细补全
+        "--header-insertion=iwyu",
+        "--pch-storage=disk", // 如果内存够大可以关闭这个选项
+        "--log=error",
+        "--compile-commands-dir=build",
+        "--background-index"
+    ]
+}
