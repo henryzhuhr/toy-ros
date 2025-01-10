@@ -7,6 +7,10 @@ ros2 pkg create --build-type ament_python --license Apache-2.0 <package_name>
 --build-type ament_python  指定构建类型为ament_python
 --license Apache-2.0  指定许可证为Apache-2.0
 <package_name>  包名
+还可以：
+ros2 pkg create --build-type ament_python --license Apache-2.0 py_srvcli --dependencies rclpy example_interfaces
+--dependencies rclpy example_interfaces  指定依赖项为rclpy和example_interfaces，这样在packahes.xml文件中就会自动添加这两个依赖项。
+
 包是ROS 2代码的组织单元。想要便于下载代码或者分享其他人代码,可以将代码放在包中。
 packages each have their own minimum required contents:
 my_package/
@@ -46,6 +50,8 @@ entry_points={
 [develop]中的入口点是用于开发时的，[install]中的入口点是用于安装时的。
 
 7.编译构建包
+可以在编译前前检测有没有缺少的依赖
+rosdep install -i --from-path src --rosdistro jazzy -y 从src目录中安装依赖项
 返回工作空间目录下运行，这样可以构建整个工作空间内的所有包。
 colcon build --packages-select py_pubsub
 用于构建指定的包，这里是py_pubsub
