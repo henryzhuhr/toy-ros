@@ -12,6 +12,7 @@ outline: deep
 cd demo
 ros2 pkg create --build-type ament_python pubsub_py
 ```
+
 得到如下内容
 ```shell
 demo/pubsub_py

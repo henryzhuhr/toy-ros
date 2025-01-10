@@ -1,8 +1,13 @@
-1.创建工作空间
-madir -p ~/ros2_ws/src    所在工作空间名为ros2_ws
+
+## 创建工作空间
+```bash
+mkdir -p ~/ros2_ws/src
+```
+    所在工作空间名为ros2_ws
 src目录下存放所有的包。
 
-2.创建包（package）
+
+## 创建包（package）
 ros2 pkg create --build-type ament_python --license Apache-2.0 <package_name>
 --build-type ament_python  指定构建类型为ament_python
 --license Apache-2.0  指定许可证为Apache-2.0

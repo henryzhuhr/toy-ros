@@ -15,7 +15,7 @@ class MinimalSubscriber(Node):     # 创建一个继承自Node的类
             10)             # 订阅队列长度为10
         self.subscription  # prevent unused variable warning 预防未使用参数警告
 
-    def listener_callback(self, msg):
+    def listener_callback(self, msg:String):
         self.get_logger().info('I heard: "%s"' % msg.data)          # 打印日志
 
 
