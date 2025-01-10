@@ -33,7 +33,7 @@ demo/pubsub_py
 仍然在你的工作空间的根，建立你的新的包:
 
 ```shell
-colcon build --packages-select pubsub_py
+colcon build --packages-select pubsub_py --symlink-install
 ```
 
 打开一个终端激活环境，并运行订阅者
@@ -100,7 +100,7 @@ ament_package()
 
 编译
 ```bash
-colcon build --packages-select pubsub
+colcon build --packages-select pubsub --symlink-install
 ```
 
 打开一个终端激活环境，并运行订阅者
@@ -163,7 +163,7 @@ setup(
 
 编译启动
 ```bash
-colcon build --packages-select py_launch_demo
+colcon build --packages-select py_launch_demo --symlink-install
 . install/setup.bash
 ros2 launch py_launch_demo _launch.py
 ```

@@ -87,3 +87,4 @@ RUN set -x && \
 
 # 提升虚拟环境 python 的优先级
 ENV PATH=${PYTHON_VENV_DIR}/bin:$PATH
+ENV VIRTUAL_ENV_DISABLE_PROMPT=1

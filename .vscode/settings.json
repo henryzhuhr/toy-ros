@@ -11,5 +11,14 @@
         "--log=error",
         "--compile-commands-dir=build",
         "--background-index"
-    ]
+    ],
+    "ros.distro": "jazzy",
+    "ros.rosSetupScript": "/opt/ros/jazzy/install/setup.bash",
+    "python.autoComplete.extraPaths": [
+        "/opt/ros/jazzy/lib/python3.12/site-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/opt/ros/jazzy/lib/python3.12/site-packages"
+    ],
+    "cmake.options.statusBarVisibility": "icon"
 }
