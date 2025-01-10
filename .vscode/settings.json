@@ -11,5 +11,13 @@
         "--log=error",
         "--compile-commands-dir=build",
         "--background-index"
+    ],
+    "python.autoComplete.extraPaths": [
+        "/root/toy-ros/install/py_pubsub/lib/python3.12/site-packages",
+        "/opt/ros/jazzy/lib/python3.12/site-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/root/toy-ros/install/py_pubsub/lib/python3.12/site-packages",
+        "/opt/ros/jazzy/lib/python3.12/site-packages"
     ]
 }
