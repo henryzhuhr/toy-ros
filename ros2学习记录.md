@@ -1,4 +1,4 @@
-
+# 建立项目流程
 ## 创建工作空间
 ```bash
 mkdir -p ~/ros2_ws/src
@@ -8,64 +8,82 @@ src目录下存放所有的包。
 
 
 ## 创建包（package）
+```bash
 ros2 pkg create --build-type ament_python --license Apache-2.0 <package_name>
---build-type ament_python  指定构建类型为ament_python
---license Apache-2.0  指定许可证为Apache-2.0
+```
+- Apache-2.0 <package_name>
+- --build-type ament_python  指定构建类型为ament_python
+- --license Apache-2.0  指定许可证为Apache-2.0
 <package_name>  包名
-还可以：
+- 还可以：
+```bash
 ros2 pkg create --build-type ament_python --license Apache-2.0 py_srvcli --dependencies rclpy example_interfaces
---dependencies rclpy example_interfaces  指定依赖项为rclpy和example_interfaces，这样在packahes.xml文件中就会自动添加这两个依赖项。
+```
+- --dependencies rclpy example_interfaces  指定依赖项为rclpy和example_interfaces，这样在packahes.xml文件中就会自动添加这两个依赖项。
 
-包是ROS 2代码的组织单元。想要便于下载代码或者分享其他人代码,可以将代码放在包中。
-packages each have their own minimum required contents:
+
+&emsp;包是ROS 2代码的组织单元。想要便于下载代码或者分享其他人代码,可以将代码放在包中。
+- packages each have their own minimum required contents:
+```bash
 my_package/
-      package.xml                file containing meta information（元信息） about the package
-      resource/my_package        marker file for the package   标记文件
-      setup.cfg                  is required when a package has executables（可执行文件）, so ros2 run can find them
-      setup.py                   containing instructions（说明信息） for how to install the package
-      my_package/                a directory with the same name as your package, 
-                                 used by ROS 2 tools to find your package, 
-                                 contains __init__.py
+      package.xml  # file containing meta information（元信息） about the package
+      resource/my_package  # marker file for the package   标记文件
+      setup.cfg  # is required when a package has executables（可执行文件）, so ros2 run can find them
+      setup.py  # containing instructions（说明信息） for how to install the package
+      my_package/  # a directory with the same name as your package,used by ROS 2 tools to find your package, contains __init__.py
+ ```                                
 
-3.创建节点
-在包中创建节点，节点是ROS 2代码的执行单元。
+## 创建节点
+&emsp;在包中创建节点，节点是ROS 2代码的执行单元。 
 对于python语言环境，要将node放在与包同名的目录下。也就是和__init__.py文件同级。
 然后在节点中写入功能代码。
 
-4.添加依赖
-确保在package.xml文件中添加了依赖项，以便构建系统可以找到它们。
+## 添加依赖
+&emsp;确保在package.xml文件中添加了依赖项，以便构建系统可以找到它们。
 在py_pubsub这个包中因为在node中写入了rclpy和std_msgs
-所以在package.xml文件中添加   （注意添加的位置要在<description>, <maintainer> and <license>等tag后一行添加！）
+所以在package.xml文件中添加   （**注意添加的位置要在<description>, <maintainer> and <license>等tag后一行添加!**）
+```xml
 <exec_depend>rclpy</exec_depend>
 <exec_depend>std_msgs</exec_depend>
+```
 This declares（声明） the package needs rclpy and std_msgs when its code is executed.
 
-5.添加进入点
+## 添加进入点
 在setup.py文件中添加入口点，以便ROS 2工具可以找到节点。
 例如
+```python
 entry_points={
         'console_scripts': [
                 'talker = py_pubsub.publisher_member_function:main',
         ],
 },
+```
 
-6.检测setup.cfg文件
-检测
+## 检测setup.cfg文件
+- 检测
 [develop]和[install]中是否有包的入口点
-[develop]中的入口点是用于开发时的，[install]中的入口点是用于安装时的。
+- [develop]中的入口点是用于开发时的，[install]中的入口点是用于安装时的。
 
-7.编译构建包
+## 编译构建包
 可以在编译前前检测有没有缺少的依赖
-rosdep install -i --from-path src --rosdistro jazzy -y 从src目录中安装依赖项
-返回工作空间目录下运行，这样可以构建整个工作空间内的所有包。
+```bash
+rosdep install -i --from-path src --rosdistro jazzy -y  # 从src目录中安装依赖项
+```
+&emsp;然后返回r工作空间目录下运行，这样可以构建整个工作空间内的所有包。
+```bash
 colcon build --packages-select py_pubsub
+```
 用于构建指定的包，这里是py_pubsub
+```bash
 source install/setup.bash
+```
 这个命令的作用非常重要
- a.它会将工作空间中的新包和路径加载到当前终端的环境中，包括可执行文件、库文件和资源文件。
+ >- 它会将工作空间中的新包和路径加载到当前终端的环境中，包括可执行文件、库文件和资源文件。
  没有执行这一步，ROS 2 将无法识别你创建的包或运行你的节点。
- b. 运行 source install/setup.bash 后，你可以直接使用 ros2 run 命令运行工作空间中的包和节点。
- c.它会更新环境变量，例如 ROS_PACKAGE_PATH、AMENT_PREFIX_PATH 等，确保这些变量指向你的工作空间中的内容，而不是系统中的其他地方。
+ >- 运行 source install/setup.bash 后，你可以直接使用 ros2 run 命令运行工作空间中的包和节点。
+ >- 它会更新环境变量，例如 ROS_PACKAGE_PATH、AMENT_PREFIX_PATH 等，确保这些变量指向你的工作空间中的内容，而不是系统中的其他地方。
 有了source install/setup.bash，就可以使用ros2 run来运行节点了。
 
-另外，没打开一个新的终端，都需要source install/setup.bash一次。才能使用ros2 run来运行节点。
+另外，每打开一个新的终端，都需要source install/setup.bash一次。才能使用ros2 run来运行节点。
+
+
