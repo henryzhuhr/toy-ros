@@ -86,4 +86,8 @@ source install/setup.bash
 
 另外，每打开一个新的终端，都需要source install/setup.bash一次。才能使用ros2 run来运行节点。
 
+## 运行包内的节点
 
+```bash
+ros2 run my_package my_node
+```

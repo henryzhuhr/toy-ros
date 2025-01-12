@@ -12,7 +12,7 @@ class MinimalPublisher(Node):  # 创建一个继承自Node的类
         )
         timer_period = 0.5  # 单位seconds
         self.timer = self.create_timer(  # 创建一个定时器，每隔0.5秒调用一次timer_callback
-            timer_period,
+            timer_period,   
             self.timer_callback,
         )
         self.i = 0
@@ -21,7 +21,7 @@ class MinimalPublisher(Node):  # 创建一个继承自Node的类
         msg = String()
         msg.data = "Hello World: %d" % self.i
         self.publisher_.publish(msg)  # 发布消息
-        self.get_logger().debug('Publishing: "%s"' % msg.data)  # 打印日志
+        self.get_logger().info('Publishing: "%s"' % msg.data)  # 打印日志
         self.i += 1
 
 
