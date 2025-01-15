@@ -8,7 +8,9 @@ class MinimalService(Node):
 
     def __init__(self):
         super().__init__('minimal_service')
-        self.srv = self.create_service(AddTwoInts, 'add_two_ints', self.add_two_ints_callback)
+        self.srv = self.create_service(AddTwoInts,  #type
+                                        'add_two_ints',  # name
+                                         self.add_two_ints_callback)  # callback
 
     def add_two_ints_callback(self, request, response):
         response.sum = request.a + request.b
@@ -18,11 +20,11 @@ class MinimalService(Node):
 
 
 def main():
-    rclpy.init()
+    rclpy.init()  # 初始化ROS2
 
-    minimal_service = MinimalService()
+    minimal_service = MinimalService()  # 创建节点
 
-    rclpy.spin(minimal_service)
+    rclpy.spin(minimal_service)  
 
     rclpy.shutdown()
 
