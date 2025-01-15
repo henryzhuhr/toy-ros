@@ -10,3 +10,5 @@ black
 # opencv-python
 # pycuda
 
+pyside6
+opencv-python

@@ -15,6 +15,7 @@ ARG APT_INSTALL_LIST="$APT_INSTALL_LIST python3-pip python3-venv"
 # ARG APT_INSTALL_LIST="$APT_INSTALL_LIST ros-jazzy-desktop-full=0.11.0-1*"
 ARG APT_INSTALL_LIST="$APT_INSTALL_LIST ros-jazzy-desktop-full"
 ARG APT_INSTALL_LIST="$APT_INSTALL_LIST x11-xserver-utils x11-apps net-tools"
+ARG APT_INSTALL_LIST="$APT_INSTALL_LIST libxcb-cursor0"
 # ARG APT_INSTALL_LIST="$APT_INSTALL_LIST libxcb-keysyms1-dev libxcb-image0-dev \
 #     libxcb-shm0-dev libxcb-icccm4-dev libxcb-sync0-dev libxcb-xfixes0-dev \
 #     libxcb-shape0-dev libxcb-randr0-dev libxcb-render-util0-dev \
