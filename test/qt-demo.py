@@ -1,3 +1,8 @@
+'''
+使用 pyside6 展示视频
+'''
+
+
 import sys
 # from PyQt6 import QtWidgets
 from PySide6 import QtWidgets
