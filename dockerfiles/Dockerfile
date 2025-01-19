@@ -73,17 +73,22 @@ RUN [ -d "/opt/ros/jazzy/" ] && echo "source /opt/ros/jazzy/setup.bash" >> $USER
 # # 临时解决方案  --ignoreExternallyManagedEnvironment
 ADD . $USER_HOME/tmp
 ENV PYTHON_VENV_DIR=$USER_HOME/.venv
-ENV PIP_MIRROR="https://mirrors.ustc.edu.cn/pypi/simple"
+ENV PIP_MIRROR_INDEX_URL="http://mirrors.cloud.tencent.com/pypi/simple"
+ENV PIP_MIRROR_TRUSTED_HOST="mirrors.cloud.tencent.com"
+
 RUN set -x && \
     python3 -m venv ${PYTHON_VENV_DIR} --clear && \
     echo "source ${PYTHON_VENV_DIR}/bin/activate" >> $USER_HOME/.bashrc && \
     VENV_PYTHON=${PYTHON_VENV_DIR}/bin/python3 && \
-    $VENV_PYTHON -m pip install -i $PIP_MIRROR -U --upgrade pip setuptools wheel && \
-    $VENV_PYTHON -m pip config set global.index-url $PIP_MIRROR && \
+    $VENV_PYTHON -m pip install -i $PIP_MIRROR_INDEX_URL -U --upgrade pip setuptools wheel && \
+    $VENV_PYTHON -m pip config set global.index-url $PIP_MIRROR_INDEX_URL && \
     [ -f $USER_HOME/tmp/requirements.txt ] && $VENV_PYTHON -m pip install -r ${USER_HOME}/tmp/requirements.txt || echo "requirements.txt not found, skip install" && \
     sudo rm -rf $USER_HOME/tmp && \
     # 清理缓存，缓存目录： - [Linux]: ~/.cache/pip and ~/.cache/pipenv  - [macOS]: ~/Library/Caches/pip and ~/.cache/pipenv  - [Windows]: %LocalAppData%/pip/Cache
     $VENV_PYTHON -m pip cache purge
+    
+RUN $VENV_PYTHON -m pip config set global.index-url $PIP_MIRROR_INDEX_URL && \
+    $VENV_PYTHON -m pip config set global.trusted-host $PIP_MIRROR_TRUSTED_HOST
 
 # 提升虚拟环境 python 的优先级
 ENV PATH=${PYTHON_VENV_DIR}/bin:$PATH
